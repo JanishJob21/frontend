@@ -54,14 +54,14 @@ export default function Attendance() {
       if (todayRecord) {
         // Update existing record
         await API.put(
-          `/attendance/${todayRecord._id}`,
+          `api/attendance/${todayRecord._id}`,
           { status },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         // Create new record
         await API.post(
-          "/attendance",
+          "api/attendance",
           { date: today, status },
           { headers: { Authorization: `Bearer ${token}` } }
         );
