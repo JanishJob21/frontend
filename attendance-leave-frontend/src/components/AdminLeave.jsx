@@ -23,7 +23,7 @@ export default function AdminLeave() {
     setLoading(true);
     try {
       // ✅ Note: Removed double /api
-      const res = await API.get("/leave", {
+      const res = await API.get("api/leave", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLeaves(res.data);
@@ -43,7 +43,7 @@ export default function AdminLeave() {
     try {
       // ✅ Note: Removed double /api
       await API.put(
-        `/leave/${id}`,
+        `api/leave/${id}`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );

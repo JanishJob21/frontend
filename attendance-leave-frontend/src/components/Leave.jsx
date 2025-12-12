@@ -29,7 +29,7 @@ export default function Leave() {
 
     try {
       await API.post(
-        "/leave",
+        "api/leave",
         { fromDate, toDate, reason },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -53,7 +53,7 @@ const load = async () => {
   if (!token) return;
 
   try {
-    const res = await API.get("/leave", {
+    const res = await API.get("api/leave", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setList(res.data);

@@ -24,7 +24,7 @@ export default function Attendance() {
     if (!token) return;
 
     try {
-      const res = await API.get("/attendance", {
+      const res = await API.get("api/attendance", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRecords(res.data);
