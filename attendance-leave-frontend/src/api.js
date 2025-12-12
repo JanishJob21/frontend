@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: process.env.VITE_API_URL
+  baseURL: import.meta.env.VITE_API_URL
 });
 
 // Add a request interceptor to add the auth token to requests
