@@ -9,9 +9,11 @@ export default function Register() {
   const [role, setRole] = useState("employee");
   const navigate = useNavigate();
 
+  const API = import.meta.env.VITE_API_URL;  // ✅ Use VITE variable
+
   const handleRegister = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/api/register", {
+      const res = await axios.post(`${API}/api/register`, {
         name,
         email,
         password,
@@ -20,6 +22,7 @@ export default function Register() {
 
       alert(res.data.message);
       navigate("/login");
+
     } catch (err) {
       console.error("Registration Error:", err);
       alert(err.response?.data?.message || "Registration failed. Please try again.");
@@ -30,7 +33,7 @@ export default function Register() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.title}>Create Account</h2>
-        
+
         <div style={styles.formGroup}>
           <label style={styles.label}>Full Name</label>
           <input
@@ -76,16 +79,15 @@ export default function Register() {
           </select>
         </div>
 
-        <button
-          onClick={handleRegister}
-          style={styles.button}
-        >
+        <button onClick={handleRegister} style={styles.button}>
           Register
         </button>
 
         <p style={styles.loginText}>
-          Already have an account? <Link to="/login" style={styles.link}>Login</Link>
+          Already have an account?{" "}
+          <Link to="/login" style={styles.link}>Login</Link>
         </p>
+
       </div>
     </div>
   );
@@ -93,82 +95,66 @@ export default function Register() {
 
 const styles = {
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '10vh',
-    backgroundColor: '#f5f5f5',
-    padding: 0,
-    margin: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "10vh",
+    backgroundColor: "#f5f5f5",
   },
   card: {
-    backgroundColor: 'white',
-    padding: '2rem',
-    width: '100%',
-    maxWidth: '400px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    margin: '20px',
+    backgroundColor: "white",
+    padding: "2rem",
+    width: "100%",
+    maxWidth: "400px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
   },
   title: {
-    color: '#2c3e50',
-    textAlign: 'center',
-    marginBottom: '1.5rem',
+    textAlign: "center",
+    color: "#2c3e50",
+    marginBottom: "1.5rem",
   },
   formGroup: {
-    marginBottom: '1.5rem',
+    marginBottom: "1.5rem",
   },
   label: {
-    display: 'block',
-    marginBottom: '0.5rem',
-    color: '#2c3e50',
-    fontWeight: '500',
+    display: "block",
+    marginBottom: "0.5rem",
+    color: "#2c3e50",
   },
   input: {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    fontSize: '1rem',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.3s',
+    width: "100%",
+    padding: "0.75rem",
+    border: "1px solid #ddd",
+    borderRadius: "6px",
+    fontSize: "1rem",
   },
   select: {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    fontSize: '1rem',
-    backgroundColor: 'white',
-    cursor: 'pointer',
+    width: "100%",
+    padding: "0.75rem",
+    border: "1px solid #ddd",
+    borderRadius: "6px",
+    fontSize: "1rem",
+    backgroundColor: "white",
   },
   button: {
-    width: '100%',
-    padding: '0.75rem',
-    backgroundColor: '#3498db',
-    color: 'white',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    marginTop: '0.5rem',
-  },
-  buttonHover: {
-    backgroundColor: '#2980b9',
+    width: "100%",
+    padding: "0.75rem",
+    backgroundColor: "#3498db",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "1rem",
   },
   loginText: {
-    textAlign: 'center',
-    marginTop: '1.5rem',
-    color: '#7f8c8d',
+    textAlign: "center",
+    marginTop: "1.5rem",
+    color: "#7f8c8d",
   },
   link: {
-    color: '#3498db',
-    textDecoration: 'none',
-    fontWeight: '500',
-  },
-  linkHover: {
-    textDecoration: 'underline',
+    color: "#3498db",
+    fontWeight: "500",
+    textDecoration: "none",
   },
 };

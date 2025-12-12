@@ -7,23 +7,29 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const API = import.meta.env.VITE_API_URL;  // ✅ Correct for Vite
+
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/api/login", {
+      const res = await axios.post(`${API}/api/login`, {
         email,
         password,
       });
 
-      console.log('Login response:', res.data);
-      
+      console.log("Login response:", res.data);
+
+      // Save token
       localStorage.setItem("token", res.data.token);
+
+      // Save user name if available
       if (res.data.user && res.data.user.name) {
         localStorage.setItem("userName", res.data.user.name);
-        window.dispatchEvent(new Event('userLoggedIn'));
+        window.dispatchEvent(new Event("userLoggedIn"));
       }
-      
+
       alert(res.data.message);
       navigate("/attendance");
+
     } catch (err) {
       console.error("Login Error:", err);
       alert(err.response?.data?.message || "Login failed. Please try again.");
@@ -34,7 +40,7 @@ export default function Login() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.title}>Login</h2>
-        
+
         <div style={styles.formGroup}>
           <label style={styles.label}>Email</label>
           <input
@@ -57,15 +63,15 @@ export default function Login() {
           />
         </div>
 
-        <button
-          onClick={handleLogin}
-          style={styles.button}
-        >
+        <button onClick={handleLogin} style={styles.button}>
           Login
         </button>
 
         <p style={styles.registerText}>
-          Don't have an account? <Link to="/register" style={styles.link}>Register</Link>
+          Don't have an account?{" "}
+          <Link to="/register" style={styles.link}>
+            Register
+          </Link>
         </p>
       </div>
     </div>
@@ -74,77 +80,65 @@ export default function Login() {
 
 const styles = {
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '10vh',
-    backgroundColor: '#f5f5f5',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "10vh",
+    backgroundColor: "#f5f5f5",
     padding: 0,
     margin: 0,
   },
   card: {
-    backgroundColor: 'white',
-    padding: '2rem',
-    width: '100%',
-    maxWidth: '400px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    margin: '20px',
+    backgroundColor: "white",
+    padding: "2rem",
+    width: "100%",
+    maxWidth: "400px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    margin: "20px",
   },
   title: {
-    color: '#2c3e50',
-    textAlign: 'center',
-    marginBottom: '1.5rem',
+    color: "#2c3e50",
+    textAlign: "center",
+    marginBottom: "1.5rem",
   },
   formGroup: {
-    marginBottom: '1.5rem',
+    marginBottom: "1.5rem",
   },
   label: {
-    display: 'block',
-    marginBottom: '0.5rem',
-    color: '#2c3e50',
-    fontWeight: '500',
+    display: "block",
+    marginBottom: "0.5rem",
+    color: "#2c3e50",
+    fontWeight: "500",
   },
   input: {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    fontSize: '1rem',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.3s',
-  },
-  inputFocus: {
-    outline: 'none',
-    borderColor: '#3498db',
+    width: "100%",
+    padding: "0.75rem",
+    border: "1px solid #ddd",
+    borderRadius: "6px",
+    fontSize: "1rem",
+    boxSizing: "border-box",
   },
   button: {
-    width: '100%',
-    padding: '0.75rem',
-    backgroundColor: '#3498db',
-    color: 'white',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    marginTop: '0.5rem',
-  },
-  buttonHover: {
-    backgroundColor: '#2980b9',
+    width: "100%",
+    padding: "0.75rem",
+    backgroundColor: "#3498db",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    fontSize: "1rem",
+    fontWeight: "600",
+    cursor: "pointer",
+    marginTop: "0.5rem",
   },
   registerText: {
-    textAlign: 'center',
-    marginTop: '1.5rem',
-    color: '#7f8c8d',
+    textAlign: "center",
+    marginTop: "1.5rem",
+    color: "#7f8c8d",
   },
   link: {
-    color: '#3498db',
-    textDecoration: 'none',
-    fontWeight: '500',
-  },
-  linkHover: {
-    textDecoration: 'underline',
+    color: "#3498db",
+    textDecoration: "none",
+    fontWeight: "500",
   },
 };
